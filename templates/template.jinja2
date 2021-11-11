@@ -1,0 +1,22 @@
+{{ header }}
+
+<small>''Таблиця оновлюється ботом {{ frequency }}. Останнє оновлення: {{ date }}''</small>
+
+{|class=\"wikitable sortable\"
+|-
+!№!!Користувач!!Кількість редагувань
+{%- for user in users %}
+    |-
+    | {{loop.index}}
+    | [[User:{{user_name}}|]]
+    | {{user_editcount}}
+{% endfor %}
+|}
+
+== Див. також ==
+{% for link in links %}
+* [[link]]
+{% endfor %}
+
+
+[[Категорія:Вікіпедія:Статистика|Редагування за останній місяць]]
