@@ -7,15 +7,15 @@
 !№!!Користувач!!Кількість редагувань
 {%- for user in users %}
     |-
-    | {{loop.index}}
-    | [[User:{{user.user_name}}|]]
-    | {{user.user_editcount}}
+    | {{ loop.index }}
+    | [[User:{{ user.user_name }}|]]
+    | {{ user.user_editcount }}
 {% endfor %}
 |}
 
 == Див. також ==
 {% for link in links %}
-* [[link]]
+* [[{{ link }}]]
 {% endfor %}
 
 
