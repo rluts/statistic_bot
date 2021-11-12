@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 
 import jinja2
 import toolforge
@@ -66,13 +66,21 @@ class ActiveUsersBot(BaseBot):
     frequency = "щоденно"
 
     def get_header(self):
-        old_date = (datetime.today() - relativedelta(months=1)).strftime("%d.%m.%Y")
-        new_date = datetime.today().strftime("%d.%m.%Y")
+        old_date, new_date = self.get_dates()
+        old_date = old_date.strftime("%d.%m.%Y")
+        new_date = new_date.strftime("%d.%m.%Y")
         return f"Кількість редагувань за останній місяць ({old_date}–{new_date})"
 
+    @staticmethod
+    def get_dates():
+        old_date = datetime.today() - relativedelta(months=1)
+        new_date = datetime.today()
+        return old_date, new_date
+
     def get_sql(self):
-        old_date = int((datetime.today() - relativedelta(months=1)).strftime("%Y%m%d000000"))
-        new_date = int(datetime.today().strftime("%Y%m%d000000"))
+        old_date, new_date = self.get_dates()
+        old_date = int(old_date.strftime("%Y%m%d000000"))
+        new_date = int(new_date.strftime("%Y%m%d000000"))
 
         return f"""
         SELECT a.actor_name, COUNT(a.actor_user) CNT FROM revision AS r
@@ -84,6 +92,18 @@ class ActiveUsersBot(BaseBot):
         """
 
 
+class ActiveUsersLastMonthBot(ActiveUsersBot):
+    title = "Користувач:RLutsBot/Редагування за останній місяць"
+    links = ["User:RLutsBot/Редагування", "User:RLutsBot/Активні"]
+    frequency = "1-го числа кожного місяця"
+
+    @staticmethod
+    def get_dates():
+        now = datetime.now()
+        month_beginning = date(now.year, now.month, 1)
+        return month_beginning - relativedelta(months=1), month_beginning
+
+
 if __name__ == "__main__":
-    bot = ActiveUsersBot()
+    bot = ActiveUsersLastMonthBot()
     print(bot.get_result())
