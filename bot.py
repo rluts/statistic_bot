@@ -77,11 +77,10 @@ class ActiveUsersBot(BaseBot):
         return f"""
         SELECT a.actor_name, COUNT(a.actor_user) CNT FROM revision AS r
         JOIN actor AS a ON (a.actor_id = r.rev_actor)
-        LEFT OUTER JOIN user_groups AS ug on (ug.ug_user = a.actor_user)
-        where r.rev_timestamp > {old_date} and r.rev_timestamp < {new_date}
-        AND ug.ug_group != 'bot'
+        WHERE r.rev_timestamp > {old_date} and r.rev_timestamp < {new_date}
+        AND a.actor_user NOT IN (SELECT ug_user FROM user_groups WHERE ug_group='bot')
         GROUP BY a.actor_name
-        ORDER BY CNT desc
+        ORDER BY CNT DESC
         """
 
 
