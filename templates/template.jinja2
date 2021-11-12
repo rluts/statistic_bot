@@ -2,10 +2,10 @@
 
 <small>''Таблиця оновлюється ботом {{ frequency }}. Останнє оновлення: {{ date }}''</small>
 
-{|class=\"wikitable sortable\"
+{|class="wikitable sortable"
 |-
 !№!!Користувач!!Кількість редагувань
-{%- for user in users %}
+{% for user in users %}
     |-
     | {{ loop.index }}
     | [[User:{{ user.user_name }}|]]
