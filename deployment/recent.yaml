@@ -22,7 +22,7 @@ spec:
             - name: bot
               image: docker-registry.tools.wmflabs.org/toolforge-python39-sssd-base:latest
               command:
-                - python
+                - /data/project/rluts/statistic_bot/start.sh
                 - /data/project/rluts/statistic_bot/bot.py
               workingDir: /data/project/rluts/statistic_bot
               env:
