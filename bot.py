@@ -19,7 +19,7 @@ class BaseBot:
             cursor.execute(self.get_sql())
             return self.render_results(cursor.fetchall())
 
-    def parse_parameters(self, results):
+    def parse_results(self, results):
         raise NotImplemented
 
     def render_results(self, results):
