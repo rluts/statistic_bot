@@ -1,14 +1,15 @@
+# NOTE: this deployment works with the "toolforge" Kubernetes cluster, and not the legacy "default" cluster.
 apiVersion: apps/v1
-kind: CronJob
+kind: Deployment
 metadata:
   name: rlutsbot.bot
-  namespace: tool-rlutsbot
+  namespace: tool-rluts
   labels:
-    name: stashbot.bot
+    name: rlutsbot.bot
     # The toolforge=tool label will cause $HOME and other paths to be mounted from Toolforge
     toolforge: tool
 spec:
-  schedule: "0 8 * * *"
+  replicas: 1
   selector:
     matchLabels:
       name: rlutsbot.bot
@@ -22,10 +23,11 @@ spec:
       containers:
         - name: bot
           image: docker-registry.tools.wmflabs.org/toolforge-python39-sssd-base:latest
-          command: [ "python", "/data/project/rluts/statistic_bot/bot.py" ]
-          workingDir: /data/project/stashbot
+          command: [ "sleep", "infinity" ]
+          workingDir: /data/project/rluts/statistic_bot
           env:
             - name: HOME
               value: /data/project/rluts
-          imagePullPolicy: IfNotPresent
-          restartPolicy: OnFailure
+            - name: PYWIKIBOT_DIR
+              value: /data/project/rluts/statistic_bot
+          imagePullPolicy: Always

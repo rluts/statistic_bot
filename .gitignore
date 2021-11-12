@@ -143,3 +143,5 @@ cython_debug/
 
 # PyWikiBot
 user_config.py
+pywikibot.lwp
+throttle.ctrl
