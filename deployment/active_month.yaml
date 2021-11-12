@@ -1,10 +1,10 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: rlutsbot.bot
+  name: rlutsbotactive_month.bot
   namespace: tool-rluts
   labels:
-    name: rlutsbot.bot
+    name: rlutsbotactive_month.bot
     # The toolforge=tool label will cause $HOME and other paths to be mounted from Toolforge
     toolforge: tool
 spec:
@@ -14,7 +14,7 @@ spec:
       template:
         metadata:
           labels:
-            name: rlutsbot.bot
+            name: rlutsbotactive_month.bot
             toolforge: tool
         spec:
           containers:
