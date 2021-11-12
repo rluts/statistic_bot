@@ -19,6 +19,7 @@ class BaseBot:
 
     @staticmethod
     def render_results(results):
+        print(results)
         with open('templates/template.jinja2') as file:
             template = jinja2.Template(file.read())
             return template.render()
