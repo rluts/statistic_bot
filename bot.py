@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import jinja2
 import toolforge
 
@@ -7,6 +9,7 @@ class BaseBot:
     links = []
     header = None
     title = None
+    frequency = None
 
     def __init__(self):
         self.connection = toolforge.connect("ukwiki")
@@ -16,8 +19,20 @@ class BaseBot:
             cursor.execute(self.get_sql())
             return self.render_results(cursor.fetchall())
 
-    def render_results(self, results):
+    def parse_parameters(self, results):
         raise NotImplemented
+
+    def render_results(self, results):
+        results = self.parse_parameters(results)
+        with open("templates/template.jinja2") as file:
+            template = jinja2.Template(file.read())
+            return template.render(
+                users=results,
+                header=self.header,
+                links=self.links,
+                frequency=self.frequency,
+                date=datetime.today().strftime("%d-%m-%Y"),
+            )
 
     def get_sql(self):
         return self.sql
@@ -34,14 +49,11 @@ class RecentPagesBot(BaseBot):
     title = "Користувач:RLutsBot/Редагування"
     frequency = "щоденно"
 
-    def render_results(self, results):
-        results = (
+    def parse_results(self, results):
+        return (
             {"user_name": user_name.decode(), "user_editcount": user_editcount}
             for user_name, user_editcount in results
         )
-        with open("templates/template.jinja2") as file:
-            template = jinja2.Template(file.read())
-            return template.render(users=results, header=self.header, links=self.links, frequency=self.frequency)
 
 
 if __name__ == "__main__":
