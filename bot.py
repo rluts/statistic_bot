@@ -19,8 +19,7 @@ class BaseBot:
 
     @staticmethod
     def render_results(results):
-        print(type(results[0]))
-        print(results[0].user_name)
+        results = ({'user_name': user_name, user_editcount: user_editcount} for user_name, user_editcount in results)
         with open('templates/template.jinja2') as file:
             template = jinja2.Template(file.read())
             return template.render(users=results)
