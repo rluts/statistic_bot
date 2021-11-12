@@ -41,3 +41,4 @@ class RecentPagesBot(BaseBot):
 
 if __name__ == '__main__':
     bot = RecentPagesBot()
+    print(bot.get_result())
