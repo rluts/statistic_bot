@@ -23,7 +23,7 @@ class BaseBot:
         raise NotImplemented
 
     def render_results(self, results):
-        results = self.parse_parameters(results)
+        results = self.parse_results(results)
         with open("templates/template.jinja2") as file:
             template = jinja2.Template(file.read())
             return template.render(
