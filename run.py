@@ -27,7 +27,6 @@ class BotRunner:
         page = self.get_page(bot_instance.title)
         wiki_text = bot_instance.get_result()
         page.text = wiki_text
-        print(wiki_text)
         page.save()
 
 
