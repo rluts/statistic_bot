@@ -27,7 +27,7 @@ class BotRunner:
         page = self.get_page(bot_instance.title)
         wiki_text = bot_instance.get_result()
         page.text = wiki_text
-        page.save()
+        page.save(summary="Автоматичне оновлення списку")
 
 
 if __name__ == "__main__":
