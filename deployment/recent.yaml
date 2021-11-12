@@ -2,9 +2,9 @@ apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: rlutsbot.bot
-  namespace: tool-rlutsbot
+  namespace: tool-rluts
   labels:
-    name: stashbot.bot
+    name: rlutsbot.bot
     # The toolforge=tool label will cause $HOME and other paths to be mounted from Toolforge
     toolforge: tool
 spec:
