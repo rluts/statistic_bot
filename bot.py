@@ -23,8 +23,12 @@ class BaseBot:
             cursor.execute(self.get_sql())
             return self.render_results(cursor.fetchall())
 
-    def parse_results(self, results):
-        raise NotImplemented
+    @staticmethod
+    def parse_results(results):
+        return (
+            {"user_name": user_name.decode(), "user_editcount": user_editcount}
+            for user_name, user_editcount in results
+        )
 
     def render_results(self, results):
         results = self.parse_results(results)
@@ -54,12 +58,6 @@ class UserEditsBot(BaseBot):
     AND user_name != 'Automatic welcomer'
     AND user_editcount >= 150 order by user_editcount desc;
     """
-
-    def parse_results(self, results):
-        return (
-            {"user_name": user_name.decode(), "user_editcount": user_editcount}
-            for user_name, user_editcount in results
-        )
 
 
 class ActiveUsersBot(BaseBot):
