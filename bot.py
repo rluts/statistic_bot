@@ -42,6 +42,7 @@ class RecentPagesBot(BaseBot):
     sql = """
     SELECT user_name, user_editcount FROM user 
     WHERE user_id NOT IN (SELECT ug_user FROM user_groups WHERE ug_group='bot') 
+    AND user_name != 'Automatic welcomer'
     AND user_editcount >= 150 order by user_editcount desc;
     """
     links = ["User:RLutsBot/Активні", "User:RLutsBot/Редагування"]
