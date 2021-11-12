@@ -8,8 +8,8 @@
 {%- for user in users %}
     |-
     | {{loop.index}}
-    | [[User:{{user_name}}|]]
-    | {{user_editcount}}
+    | [[User:{{user.user_name}}|]]
+    | {{user.user_editcount}}
 {% endfor %}
 |}
 
