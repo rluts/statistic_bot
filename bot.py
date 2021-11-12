@@ -30,7 +30,7 @@ class RecentPagesBot(BaseBot):
     AND user_editcount >= 150 order by user_editcount desc;
     """
     links = ["User:RLutsBot/Активні", "User:RLutsBot/Редагування"]
-    header = "Список користувачів, кількість редагувань яких не менша 100"
+    header = "Список користувачів, кількість редагувань яких не менша 150"
     title = "Користувач:RLutsBot/Редагування"
     frequency = "щоденно"
 
