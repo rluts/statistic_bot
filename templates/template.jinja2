@@ -8,7 +8,7 @@
 {%- for user in users %}
     |-
     | {{loop.index}}
-    | [[User:{{user_name}}|]]
+    | [[User:{{user_name.decode()}}|]]
     | {{user_editcount}}
 {% endfor %}
 |}

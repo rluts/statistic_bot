@@ -19,10 +19,11 @@ class BaseBot:
 
     @staticmethod
     def render_results(results):
-        print(results)
+        print(type(results[0]))
+        print(results[0].user_name)
         with open('templates/template.jinja2') as file:
             template = jinja2.Template(file.read())
-            return template.render()
+            return template.render(users=results)
 
     def get_sql(self):
         return self.sql
