@@ -1,0 +1,31 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: rlutsbot.bot
+  namespace: tool-rluts
+  labels:
+    name: rlutsbot.bot
+    # The toolforge=tool label will cause $HOME and other paths to be mounted from Toolforge
+    toolforge: tool
+spec:
+  schedule: "15 7 * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            name: rlutsbot.bot
+            toolforge: tool
+        spec:
+          containers:
+            - name: bot
+              image: docker-registry.tools.wmflabs.org/toolforge-python39-sssd-base:latest
+              command:
+                - /data/project/rluts/statistic_bot/start.sh
+                - edits
+              workingDir: /data/project/rluts/statistic_bot
+              env:
+                - name: HOME
+                  value: /data/project/rluts
+              imagePullPolicy: IfNotPresent
+          restartPolicy: Never

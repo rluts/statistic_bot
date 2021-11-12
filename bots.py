@@ -1,6 +1,5 @@
-from datetime import datetime, date
+from datetime import date, datetime
 
-import jinja2
 import toolforge
 from dateutil.relativedelta import relativedelta
 
@@ -102,8 +101,3 @@ class ActiveUsersLastMonthBot(ActiveUsersBot):
         now = datetime.now()
         month_beginning = date(now.year, now.month, 1)
         return month_beginning - relativedelta(months=1), month_beginning
-
-
-if __name__ == "__main__":
-    bot = ActiveUsersLastMonthBot()
-    print(bot.get_result())
