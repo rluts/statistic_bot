@@ -25,7 +25,6 @@ class BaseBot:
 
     @staticmethod
     def parse_results(results):
-        print(results)
         return (
             {"user_name": user_name.decode(), "user_editcount": user_editcount}
             for user_name, user_editcount in results
@@ -76,9 +75,13 @@ class ActiveUsersBot(BaseBot):
         new_date = int(datetime.today().strftime("%Y%m%d000000"))
 
         return f"""
-        SELECT ac.actor_name, ac.actor_user FROM revision AS re 
-        JOIN actor_revision AS ac ON (re.rev_actor = ac.actor_id) 
-        WHERE (re.rev_timestamp > {old_date} AND re.rev_timestamp < {new_date} )
+        SELECT a.actor_name, COUNT(a.actor_user) CNT FROM revision AS r
+        JOIN actor AS a ON (a.actor_id = r.rev_actor)
+        LEFT OUTER JOIN user_groups AS ug on (ug.ug_user = a.actor_user)
+        where r.rev_timestamp > {old_date} and r.rev_timestamp < {new_date}
+        AND ug.ug_group != 'bot'
+        GROUP BY a.actor_name
+        ORDER BY CNT desc
         """
 
 
