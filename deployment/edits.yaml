@@ -27,5 +27,7 @@ spec:
               env:
                 - name: HOME
                   value: /data/project/rluts
+                - name: PYWIKIBOT_DIR
+                  value: /data/project/rluts/statistic_bot
               imagePullPolicy: IfNotPresent
           restartPolicy: Never
