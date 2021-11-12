@@ -72,8 +72,8 @@ class ActiveUsersBot(BaseBot):
         return f"Кількість редагувань за останній місяць ({old_date}–{new_date})"
 
     def get_sql(self):
-        old_timestamp = (datetime.today() - relativedelta(months=1)).timestamp()
-        timestamp = datetime.today().timestamp()
+        old_timestamp = (datetime.today() - relativedelta(months=1)).timestamp() * 1000000
+        timestamp = datetime.today().timestamp() * 1000000
 
         return f"""
         SELECT ac.actor_name, ac.actor_user FROM revision AS re 
