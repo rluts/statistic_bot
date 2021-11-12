@@ -78,6 +78,7 @@ class ActiveUsersBot(BaseBot):
         SELECT ac.actor_name, ac.actor_user FROM revision AS re 
         JOIN actor_revision AS ac ON (re.rev_actor = ac.actor_id) 
         WHERE (re.rev_timestamp > {old_timestamp} AND re.rev_timestamp < {timestamp} )
+        LIMIT 2000
         """
 
 
