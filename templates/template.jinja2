@@ -5,18 +5,14 @@
 {|class="wikitable sortable"
 |-
 !№!!Користувач!!Кількість редагувань
-{% for user in users %}
-    |-
-    | {{ loop.index }}
-    | [[User:{{ user.user_name }}|]]
-    | {{ user.user_editcount }}
+{% for user in users -%}
+|-
+| {{ loop.index }}||[[User:{{ user.user_name }}|]]||{{ user.user_editcount }}
 {% endfor %}
 |}
 
 == Див. також ==
-{% for link in links %}
+{% for link in links -%}
 * [[{{ link }}]]
 {% endfor %}
-
-
 [[Категорія:Вікіпедія:Статистика|Редагування за останній місяць]]
