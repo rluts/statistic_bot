@@ -41,6 +41,7 @@ class BaseBot:
                 frequency=self.frequency,
                 date=datetime.today().strftime("%d.%m.%Y"),
             )
+        return None
 
     def get_sql(self):
         return self.sql
@@ -56,6 +57,7 @@ class UserEditsBot(BaseBot):
     SELECT user_name, user_editcount FROM user 
     WHERE user_id NOT IN (SELECT ug_user FROM user_groups WHERE ug_group='bot') 
     AND user_name != 'Automatic welcomer'
+    AND user_is_temp = 0
     AND user_editcount >= 150 order by user_editcount desc;
     """
 
@@ -83,12 +85,21 @@ class ActiveUsersBot(BaseBot):
         new_date = int(new_date.strftime("%Y%m%d000000"))
 
         return f"""
-        SELECT a.actor_name, COUNT(a.actor_user) CNT FROM revision AS r
-        JOIN actor AS a ON (a.actor_id = r.rev_actor)
-        WHERE r.rev_timestamp > {old_date} and r.rev_timestamp < {new_date}
-        AND a.actor_user NOT IN (SELECT ug_user FROM user_groups WHERE ug_group='bot')
+        SELECT a.actor_name, COUNT(*) AS CNT
+        FROM revision AS r
+        JOIN actor AS a 
+          ON a.actor_id = r.rev_actor
+        JOIN user u 
+          ON u.user_id = a.actor_user
+        LEFT JOIN user_groups ug 
+          ON ug.ug_user = u.user_id
+          AND ug.ug_group = 'bot'
+        WHERE r.rev_timestamp > {old_date}
+          AND r.rev_timestamp < {new_date}
+          AND u.user_is_temp = 0
+          AND ug.ug_user IS NULL
         GROUP BY a.actor_name
-        ORDER BY CNT DESC
+        ORDER BY CNT DESC;
         """
 
 
