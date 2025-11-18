@@ -2,6 +2,10 @@ import sys
 
 import pywikibot
 
+# Increase MediaWiki request timeout to 60 minutes so long-running queries or
+# page saves have enough time to finish without failing.
+pywikibot.config.socket_timeout = 60 * 60
+
 from bots import UserEditsBot, ActiveUsersBot, ActiveUsersLastMonthBot
 
 
